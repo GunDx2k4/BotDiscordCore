@@ -53,6 +53,7 @@ namespace BotDiscordCore.Bot
             ClientBot.Ready += BotHandler.ReadyClientAsync;
 
             ClientBot.UserJoined += UserHandler.WelcomeNewUserAsync;
+            ClientBot.UserLeft += UserHandler.ByeUserAsync;
 
             return ClientBot;
         }
