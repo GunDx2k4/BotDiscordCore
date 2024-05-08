@@ -9,7 +9,7 @@ namespace BotDiscordCore.Services
         public async Task ReadyClientAsync()
         {
             await BotDiscord.Instance.Interaction.RegisterCommandsGloballyAsync();
-            await BotDiscord.Instance.ClientBot.SetActivityAsync(new Game("BOT Quản lý , hỗ trợ những việc linh tinh ..... Code By C# Owner : GunDx(dungdzk4#8028)"));
+            await BotDiscord.Instance.ClientBot.SetActivityAsync(new Game(Config.StatusBot));
 
         }
 

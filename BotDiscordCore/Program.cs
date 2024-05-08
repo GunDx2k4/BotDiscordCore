@@ -10,11 +10,9 @@ namespace BotDiscordCore
     {
         static async Task Main(string[] args)
         {
-            ResourceManager resourceManager = new ResourceManager("BotDiscordCore.Properties.Resources", typeof(Program).Assembly);
-            string TokenBot = resourceManager.GetString("TokenBot");
             try
             {
-                TokenUtils.ValidateToken(TokenType.Bot, TokenBot);
+                TokenUtils.ValidateToken(TokenType.Bot, Config.TokenBot);
             }
             catch (ArgumentNullException)
             {
@@ -23,13 +21,13 @@ namespace BotDiscordCore
             }
             catch (ArgumentException)
             {
-                MyLogger.Log($"Token bot [{TokenBot}] is invalid", LogLevel.Error);
+                MyLogger.Log($"Token bot [{Config.TokenBot}] is invalid", LogLevel.Error);
                 return;
             }
 
             Resources.Load();
 
-            await BotDiscord.Instance.ConnectBotAsync(TokenBot);
+            await BotDiscord.Instance.ConnectBotAsync(Config.TokenBot);
         }
     }
 }
