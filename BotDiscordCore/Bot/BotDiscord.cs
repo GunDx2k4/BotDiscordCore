@@ -26,6 +26,8 @@ namespace BotDiscordCore.Bot
 
         public BotServices BotHandler { get; private set; }
 
+        public UserService UserHandler { get; private set; }
+
 
 
         private DiscordSocketClient CreateBot()
@@ -44,10 +46,13 @@ namespace BotDiscordCore.Bot
             CommandHandler = new MessageServices();
 
             BotHandler = new BotServices();
+            UserHandler = new UserService();
 
             ClientBot.Connected += BotHandler.ConnectedClientAsync;
             ClientBot.Disconnected += BotHandler.DisconnectedClientAsync;
             ClientBot.Ready += BotHandler.ReadyClientAsync;
+
+            ClientBot.UserJoined += UserHandler.WelcomeNewUserAsync;
 
             return ClientBot;
         }

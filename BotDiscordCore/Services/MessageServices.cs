@@ -61,11 +61,13 @@ namespace BotDiscordCore.Services
 
             if (message.Channel is SocketGuildChannel guildChannel)
             {
-                MyLogger.Log($"[Message/{message.Author.Username}] ==> [Channel/{guildChannel.Name}, Guild/{guildChannel.Guild.Name}] : {message.Content}", LogLevel.Debug);
+                if(!string.IsNullOrEmpty(message.Content))
+                    MyLogger.Log($"[Message/{message.Author.Username}] ==> [Channel/{guildChannel.Name}, Guild/{guildChannel.Guild.Name}] : {message.Content}", LogLevel.Debug);
             }
             else if (message.Channel is SocketDMChannel dmChannel)
             {
-                MyLogger.Log($"[Message/{message.Author.Username}] ==> [User/{dmChannel.Recipient.Username}] : {message.Content}", LogLevel.Debug);
+                if (!string.IsNullOrEmpty(message.Content))
+                    MyLogger.Log($"[Message/{message.Author.Username}] ==> [User/{dmChannel.Recipient.Username}] : {message.Content}", LogLevel.Debug);
             }
 
             int argPos = 0;

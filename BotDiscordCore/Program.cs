@@ -19,10 +19,12 @@ namespace BotDiscordCore
             catch (ArgumentNullException)
             {
                 MyLogger.Log($"Token bot is null, empty, or contains only whitespace.", LogLevel.Error);
+                return;
             }
             catch (ArgumentException)
             {
                 MyLogger.Log($"Token bot [{TokenBot}] is invalid", LogLevel.Error);
+                return;
             }
 
             Resources.Load();

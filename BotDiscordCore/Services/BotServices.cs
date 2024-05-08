@@ -22,7 +22,8 @@ namespace BotDiscordCore.Services
 
         public Task DisconnectedClientAsync(Exception e)
         {
-            MyLogger.Log($"[Disconnected/{BotDiscord.Instance.ClientBot.CurrentUser.Username}] {e}", LogLevel.Error);
+            MyLogger.Log($"[Disconnected/{BotDiscord.Instance.ClientBot.CurrentUser?.Username}] {e}", LogLevel.Error);
+            Environment.Exit(0);
             return Task.CompletedTask;
         }
     }
