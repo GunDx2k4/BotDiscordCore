@@ -14,9 +14,16 @@ namespace BotDiscordCore.Services
         {
             await BotDiscord.Instance.Interaction.AddModulesAsync(Assembly.GetEntryAssembly(), BotDiscord.Instance.ServiceProvider);
 
+            MyLogger.Log($"Loading Interaction ContextCommands", LogLevel.Debug);
+            foreach (var command in BotDiscord.Instance.Interaction.ContextCommands)
+            {
+                MyLogger.Log($"Loading Interaction [{command.Name}] {command.CommandType}", LogLevel.Debug);
+            }
+            MyLogger.Line();
+            MyLogger.Log($"Loading Interaction SlashCommands", LogLevel.Debug);
             foreach (var command in BotDiscord.Instance.Interaction.SlashCommands)
             {
-                MyLogger.Log($"Loading Interaction [{command.Name}]", LogLevel.Debug);
+                MyLogger.Log($"Loading Interaction [{command.Name}] {command.CommandType}", LogLevel.Debug);
             }
             MyLogger.Line();
 

@@ -13,5 +13,19 @@ namespace BotDiscordCore.Commands.Modules
         {
             await ReplyAsync("Pong!");
         }
+
+        [Command("ban")]
+        public async Task HandleBanCommand(IUser user ,string reason)
+        {
+            try
+            {
+                await Context.Guild.AddBanAsync(user, reason: reason);
+                await ReplyAsync($"Complated ban user {user.Mention} [{user.Id}]!");
+            }
+            catch (Exception ex)
+            {
+                await ReplyAsync($"ERROR {ex}");
+            }
+        }
     }
 }

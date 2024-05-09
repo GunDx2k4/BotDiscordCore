@@ -23,7 +23,6 @@ namespace BotDiscordCore.Services
                 Description = $"⏲Tuổi của tài khoản {user.Mention}:\n{TimestampTag.FromDateTimeOffset(user.CreatedAt, TimestampTagStyles.Relative)}",
                 Color = Color.Blue,
                 Timestamp = DateTimeOffset.UtcNow,
-                ImageUrl = string.IsNullOrEmpty(user.GetAvatarUrl()) ? user.GetDefaultAvatarUrl() : user.GetAvatarUrl(),
                 ThumbnailUrl = guild.IconUrl,
                 Footer = new EmbedFooterBuilder
                 {
@@ -60,7 +59,6 @@ namespace BotDiscordCore.Services
                 Description = $"⏲Tuổi của tài khoản {newUser.Mention}:\n{TimestampTag.FromDateTimeOffset(newUser.CreatedAt, TimestampTagStyles.Relative)}",
                 Color = Color.Blue,
                 Timestamp = DateTimeOffset.UtcNow,
-                ImageUrl = string.IsNullOrEmpty(newUser.GetAvatarUrl()) ? newUser.GetDefaultAvatarUrl() : newUser.GetAvatarUrl(),
                 ThumbnailUrl = guild.IconUrl,
                 Footer = new EmbedFooterBuilder
                 {

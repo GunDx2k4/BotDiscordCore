@@ -8,6 +8,7 @@ namespace BotDiscordCore.Logger
         {
             string prefix = GetLogLevelPrefix(level);
             Console.WriteLine($"------------------------------------------------------------------");
+            Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Gray;
         }
         public static void Log(string message, LogLevel level = LogLevel.Info)

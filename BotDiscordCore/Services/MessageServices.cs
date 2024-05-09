@@ -14,6 +14,7 @@ namespace BotDiscordCore.Services
         {
             await BotDiscord.Instance.Command.AddModulesAsync(assembly: Assembly.GetEntryAssembly(),
                                             services: BotDiscord.Instance.ServiceProvider);
+            MyLogger.Log($"Loading Command", LogLevel.Debug);
             foreach (var command in BotDiscord.Instance.Command.Commands)
             {
                 MyLogger.Log($"Loading Command [{command.Name}]", LogLevel.Debug);
