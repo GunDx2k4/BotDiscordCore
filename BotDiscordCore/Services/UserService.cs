@@ -1,4 +1,5 @@
 ﻿using BotDiscordCore.Logger;
+using BotDiscordCore.Utils;
 using Discord;
 using Discord.WebSocket;
 
@@ -20,7 +21,7 @@ namespace BotDiscordCore.Services
                     IconUrl = string.IsNullOrEmpty(user.GetAvatarUrl()) ? user.GetDefaultAvatarUrl() : user.GetAvatarUrl(),
                 },
                 Title = $"Tạm biệt bạn, cảm ơn bạn đã tham gia server.",
-                Description = $"⏲Tuổi của tài khoản {user.Mention}:\n{TimestampTag.FromDateTimeOffset(user.CreatedAt, TimestampTagStyles.Relative)}",
+                Description = $"Cảm ơn bạn đã đến server {MarkdownText.BoldText(MarkdownText.HighlightText(guild.Name))} trong thời gian qua :heart_hands: :heart_hands:",
                 Color = Color.Blue,
                 Timestamp = DateTimeOffset.UtcNow,
                 ThumbnailUrl = guild.IconUrl,
@@ -30,6 +31,8 @@ namespace BotDiscordCore.Services
                     IconUrl = guild.IconUrl,
                 }
             };
+
+            await user.SendMessageAsync(embed: embedBye.Build());
 
             await defaultChannel.SendMessageAsync(embed: embedBye.Build());
         }

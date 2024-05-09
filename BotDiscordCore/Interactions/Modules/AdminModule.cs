@@ -24,6 +24,26 @@ namespace BotDiscordCore.Interactions.Modules
             {
                 await Context.Guild.AddBanAsync(user, reason: reason);
                 await RespondAsync($"Complated ban user {user.Mention} [{user.Id}]!");
+                var embedBan = new EmbedBuilder
+                {
+                    Author = new EmbedAuthorBuilder
+                    {
+                        Name = BotDiscord.Instance.ClientBot.CurrentUser.Username,
+                        IconUrl = string.IsNullOrEmpty(BotDiscord.Instance.ClientBot.CurrentUser.GetAvatarUrl()) ? BotDiscord.Instance.ClientBot.CurrentUser.GetDefaultAvatarUrl() : BotDiscord.Instance.ClientBot.CurrentUser.GetAvatarUrl(),
+                    },
+                    Title = $"Bạn đã bị ban tại server {Context.Guild.Name}",
+                    Description = $"Bạn đã bị ban tại server {MarkdownText.BoldText(MarkdownText.HighlightText(Context.Guild.Name))} " +
+                    $"với lí do {MarkdownText.BoldText(MarkdownText.HighlightText(reason))}",
+                    Color = Color.Red,
+                    Timestamp = DateTimeOffset.UtcNow,
+                    ThumbnailUrl = Context.Guild.IconUrl,
+                    Footer = new EmbedFooterBuilder
+                    {
+                        Text = $"From {Context.Guild.Name}",
+                        IconUrl = Context.Guild.IconUrl,
+                    }
+                };
+                await user.SendMessageAsync(embed: embedBan.Build());
             }
             catch (Exception ex)
             {
@@ -38,6 +58,25 @@ namespace BotDiscordCore.Interactions.Modules
             {
                 await Context.Guild.RemoveBanAsync(user);
                 await RespondAsync($"Complated unban user {user.Mention} [{user.Id}]!");
+                var embedUnban = new EmbedBuilder
+                {
+                    Author = new EmbedAuthorBuilder
+                    {
+                        Name = BotDiscord.Instance.ClientBot.CurrentUser.Username,
+                        IconUrl = string.IsNullOrEmpty(BotDiscord.Instance.ClientBot.CurrentUser.GetAvatarUrl()) ? BotDiscord.Instance.ClientBot.CurrentUser.GetDefaultAvatarUrl() : BotDiscord.Instance.ClientBot.CurrentUser.GetAvatarUrl(),
+                    },
+                    Title = $"Bạn đã được mở ban tại server {Context.Guild.Name}",
+                    Description = $"Bạn có thể quay lại server tại đây \n {MarkdownText.MaskedLinks(Context.Guild.Name, Context.Guild.DefaultChannel.CreateInviteAsync(maxUses: 1,maxAge: null).Result.Url)}",
+                    Color = Color.Green,
+                    Timestamp = DateTimeOffset.UtcNow,
+                    ThumbnailUrl = Context.Guild.IconUrl,
+                    Footer = new EmbedFooterBuilder
+                    {
+                        Text = $"From {Context.Guild.Name}",
+                        IconUrl = Context.Guild.IconUrl,
+                    }
+                };
+                await user.SendMessageAsync(embed: embedUnban.Build());
             }
             catch (Exception ex)
             {
