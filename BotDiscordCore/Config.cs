@@ -9,7 +9,7 @@ namespace BotDiscordCore
 
         static Config()
         {
-            string jsonContent = File.ReadAllText($"{Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."))}/config.json");
+            string jsonContent = File.ReadAllText($"config.json");
 
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
             JsonElement root = jsonDoc.RootElement;

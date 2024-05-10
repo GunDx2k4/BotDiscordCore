@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.14.1" />
+    <PackageReference Include="Google.Apis" Version="1.68.0" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.68.0.3414" />
   </ItemGroup>
 
 </Project>
