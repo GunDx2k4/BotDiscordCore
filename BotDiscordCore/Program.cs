@@ -11,6 +11,7 @@ namespace BotDiscordCore
 
         public async Task MainAsync()
         {
+            Console.OutputEncoding = Encoding.UTF8;
             var botDiscord = new BotDiscord();
             Log.Information($"Start ....");
             

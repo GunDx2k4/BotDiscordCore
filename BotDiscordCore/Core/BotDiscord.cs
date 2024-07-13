@@ -30,21 +30,29 @@ namespace BotDiscordCore.Core
 
         private void InitConfig()
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-
-            var json = File.ReadAllText("config.json");
             try
             {
-                _configBot = JsonConvert.DeserializeObject<ConfigBot>(json);
+                var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+                Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(configuration)
+                    .CreateLogger();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
 
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+            try
+            {
+                var json = File.ReadAllText("config.json");
+                _configBot = JsonConvert.DeserializeObject<ConfigBot>(json);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
             Log.Information("Init completed config.");
         }
 
@@ -64,13 +72,6 @@ namespace BotDiscordCore.Core
                 .AddSingleton<IMessageService, MessageService>()
                 .AddSingleton<ISlashCommandService, SlashCommandService>()
                 .AddSingleton(config);
-
-            _services = _serviceCollection.BuildServiceProvider();
-
-            _client = _services.GetRequiredService<DiscordSocketClient>();
-            _botService = _services.GetRequiredService<IBotService>();
-            _slashCommandService = _services.GetRequiredService<ISlashCommandService>();
-            _messageService = _services.GetRequiredService<IMessageService>();
             Log.Information("Init completed services.");
         }
 
@@ -84,32 +85,30 @@ namespace BotDiscordCore.Core
         public void AddMessageService<T>() where T : class, IMessageService
         {
             _serviceCollection.AddSingleton<IMessageService,T>();
-            _services = _serviceCollection.BuildServiceProvider();
-            _messageService = _services.GetRequiredService<IMessageService>();
-
             Log.Information($"Add new MessageService {typeof(T).Name}");
         }
 
         public void AddBotService<T>() where T : class, IBotService
         {
             _serviceCollection.AddSingleton<IBotService, T>();
-            _services = _serviceCollection.BuildServiceProvider();
-            _botService = _services.GetRequiredService<IBotService>();
-
             Log.Information($"Add new BotService {typeof(T).Name}");
         }
 
         public void AddSlashCommandService<T>() where T : class, ISlashCommandService
         {
             _serviceCollection.AddSingleton<ISlashCommandService, T>();
-            _services = _serviceCollection.BuildServiceProvider();
-            _slashCommandService = _services.GetRequiredService<ISlashCommandService>();
-
             Log.Information($"Add new CommandService {typeof(T).Name}");
         }
 
         public async Task ConfigureAsync()
         {
+            _services = _serviceCollection.BuildServiceProvider();
+
+            _client = _services.GetRequiredService<DiscordSocketClient>();
+            _botService = _services.GetRequiredService<IBotService>();
+            _slashCommandService = _services.GetRequiredService<ISlashCommandService>();
+            _messageService = _services.GetRequiredService<IMessageService>();
+
             _client.Ready += _botService.ReadyClientAsync;
             _client.Connected += _botService.ConnectedClientAsync;
             _client.Disconnected += _botService.DisconnectedClientAsync;

@@ -8,9 +8,9 @@ namespace BotDiscordCore.Core.Services
 {
     public class BotService : IBotService
     {
-        private readonly InteractionService _command;
-        private readonly DiscordSocketClient _client;
-        private readonly IServiceProvider _services;
+        protected readonly InteractionService _command;
+        protected readonly DiscordSocketClient _client;
+        protected readonly IServiceProvider _services;
 
         public BotService(InteractionService command, DiscordSocketClient client, IServiceProvider services)
         {
