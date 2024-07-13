@@ -27,10 +27,20 @@ namespace BotDiscordCore.Core.Services
 
             if (message.Channel is SocketGuildChannel guildChannel)
             {
+                if(message.Embeds.Any())
+                {
+                    Log.Information($"[Message/{message.Author.Username} form Channel/{guildChannel.Name}, Guild/{guildChannel.Guild.Name}] ==> Embed[{message.Embeds.Count}]");
+                    return;
+                }
                 Log.Information($"[Message/{message.Author.Username} form Channel/{guildChannel.Name}, Guild/{guildChannel.Guild.Name}] ==> {message.Content}");
             }
             else if (message.Channel is SocketDMChannel dmChannel)
             {
+                if (message.Embeds.Any())
+                {
+                    Log.Information($"[Message/{message.Author.Username} form User/{dmChannel.Recipient.Username}] ==> Embed[{message.Embeds.Count}]");
+                    return;
+                }
                 Log.Information($"[Message/{message.Author.Username} form User/{dmChannel.Recipient.Username}] ==> {message.Content}");
             }
 

@@ -112,10 +112,13 @@ namespace BotDiscordCore.Core
             _client.Ready += _botService.ReadyClientAsync;
             _client.Connected += _botService.ConnectedClientAsync;
             _client.Disconnected += _botService.DisconnectedClientAsync;
-            
+            _client.JoinedGuild += _botService.JoinedGuildAsync;
+            _client.LeftGuild += _botService.LeftGuildAsync;
+
             await InstallCommandAsync();
             Log.Information("Load config completed.");
         }
+
         public async Task StartAsync()
         {
             try
